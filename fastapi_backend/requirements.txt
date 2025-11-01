@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+requests
+pydantic
+python-dotenv
+pymongo
+docx2txt
+PyPDF2
+
+# LangChain libraries (keep versions compatible with your code)
+langchain
+langchain-core
+langchain-google-genai
+
+# OPTIONAL but recommended:
+# These are for handling CORS and other production needs
+python-multipart
