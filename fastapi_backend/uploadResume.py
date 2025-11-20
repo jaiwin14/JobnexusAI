@@ -20,14 +20,11 @@ from datetime import datetime
 from pymongo import MongoClient
 
 # LangChain imports
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.chains.llm import LLMChain
-from langchain.chains.sequential import SequentialChain
-from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
 from dotenv import load_dotenv
 load_dotenv()
 
