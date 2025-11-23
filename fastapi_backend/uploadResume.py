@@ -31,11 +31,18 @@ load_dotenv()
 # Initialize FastAPI app
 app = FastAPI()
 
-# Setup CORS to allow requests from the React frontend
+# Setup CORS to allow requests from the React frontend. Read allowed origins from
+# FASTAPI_CORS_ORIGINS environment variable (comma-separated). If not provided,
+# fall back to the previous defaults.
+origins_env = os.getenv("FASTAPI_CORS_ORIGINS", "")
+if origins_env:
+    origins = [o.strip() for o in origins_env.split(",") if o.strip()]
+else:
+    origins = ["https://job-nexus-ai.vercel.app", "http://localhost:5173"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://job-nexus-ai.vercel.app",
-        "http://localhost:5173"],  # In production, replace with specific origins
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

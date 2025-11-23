@@ -13,20 +13,26 @@ const socketIo = require('socket.io');
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: ["https://job-nexus-ai.vercel.app",
-        "http://localhost:5173"], 
-  methods: ["GET", "POST", "DELETE"],
-  credentials: true
-}));
+// Read allowed frontend origins from env (comma-separated) or fall back to defaults
+const FRONTEND_ORIGINS = process.env.FRONTEND_ORIGINS
+  ? process.env.FRONTEND_ORIGINS.split(",").map((s) => s.trim())
+  : ["https://job-nexus-ai.vercel.app", "http://localhost:5173"];
+
+app.use(
+  cors({
+    origin: FRONTEND_ORIGINS,
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // After creating the express app, add:
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://job-nexus-ai.vercel.app", 
-    methods: ["GET", "POST"]
+    origin: FRONTEND_ORIGINS,
+    methods: ["GET", "POST"],
   }
 });
 
