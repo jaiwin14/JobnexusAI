@@ -9,12 +9,12 @@ dnspython
 docx2txt
 PyPDF2
 
-# LangChain libraries (keep versions compatible with your code)
-langchain
-langchain-core
-langchain-google-genai
+# LangChain libraries (pinned compatible set)
+# Do not list langchain-core separately; it's bundled via langchain
+langchain==0.2.16
+langchain-google-genai==2.0.6
 # Underlying Google SDK used by langchain-google-genai
-google-generativeai
+google-generativeai==0.7.2
 
 # For handling file uploads (multipart/form-data)
 python-multipart
