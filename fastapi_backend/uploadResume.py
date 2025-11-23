@@ -38,7 +38,7 @@ origins_env = os.getenv("FASTAPI_CORS_ORIGINS", "")
 if origins_env:
     origins = [o.strip() for o in origins_env.split(",") if o.strip()]
 else:
-    origins = ["https://jobnexus-iota.vercel.app/", "http://localhost:5173"]
+    origins = ["https://jobnexus-iota.vercel.app", "http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -392,10 +392,10 @@ def search_jobs_adzuna(search_keywords, user_location=None):
     Alternative job search using Adzuna API
     Free tier available with good coverage
     """
-    app_id = os.environ.get("ADZUNA_APP_ID", "595333d0")
-    app_key = os.environ.get("ADZUNA_APP_KEY", "4ab5e2aacb40f33b9197f36989e22ba6")
+    app_id = os.environ.get("ADZUNA_APP_ID")
+    app_key = os.environ.get("ADZUNA_APP_KEY")
     
-    if not app_id or not app_key or app_id == "your-adzuna-app-id":
+    if not app_id or not app_key:
         return generate_fallback_jobs(search_keywords, user_location)
     
     base_url = "https://api.adzuna.com/v1/api/jobs/us/search/1"
@@ -670,8 +670,9 @@ def health_check():
     return {
         "status": "healthy",
         "apis": {
-            "gemini": "configured" if GOOGLE_API_KEY != "your-gemini-api-key" else "not configured",
-            "jsearch": "configured" if RAPIDAPI_KEY != "your-rapidapi-key" else "not configured"
+            "gemini": "configured" if bool(os.environ.get("GOOGLE_API_KEY")) else "not configured",
+            "jsearch": "configured" if bool(os.environ.get("RAPIDAPI_KEY")) else "not configured",
+            "adzuna": "configured" if bool(os.environ.get("ADZUNA_APP_ID") and os.environ.get("ADZUNA_APP_KEY")) else "not configured",
         }
     }
 
