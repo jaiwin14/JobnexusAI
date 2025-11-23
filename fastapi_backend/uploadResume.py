@@ -38,7 +38,7 @@ origins_env = os.getenv("FASTAPI_CORS_ORIGINS", "")
 if origins_env:
     origins = [o.strip() for o in origins_env.split(",") if o.strip()]
 else:
-    origins = ["https://https://jobnexus-iota.vercel.app/", "http://localhost:5173"]
+    origins = ["https://jobnexus-iota.vercel.app/", "http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,
