@@ -55,6 +55,29 @@ app.use('/api/hirebot', hireBotRoutes);
 app.use('/api/ats', atsRoutes);
 app.use('/api/userHome', userHomeRoutes);
 
+// Health endpoint - reports basic service and DB status
+app.get('/health', (req, res) => {
+  const port = process.env.PORT || 5000;
+  let dbStatus = 'not-configured';
+  try {
+    if (mongoose && mongoose.connection) {
+      const state = mongoose.connection.readyState; // 0 disconnected,1 connected,2 connecting,3 disconnecting
+      if (state === 1) dbStatus = 'connected';
+      else if (state === 2) dbStatus = 'connecting';
+      else if (state === 3) dbStatus = 'disconnecting';
+      else dbStatus = 'disconnected';
+    }
+  } catch (e) {
+    dbStatus = 'error';
+  }
+
+  res.json({
+    status: 'ok',
+    port,
+    db: dbStatus,
+  });
+});
+
 // Socket.io connection handling
 io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);

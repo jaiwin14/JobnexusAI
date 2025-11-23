@@ -1,0 +1,6 @@
+.env
+node_modules/
+fastapi_backend/.venv/
+dist/
+build/
+.DS_Store
