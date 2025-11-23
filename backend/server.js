@@ -39,10 +39,15 @@ const io = socketIo(server, {
 app.set('io', io);
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/jobnexus', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const MONGODB_URI = process.env.MONGODB_URI || null;
+if (MONGODB_URI) {
+  mongoose
+    .connect(MONGODB_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.error('MongoDB connection error:', err));
+} else {
+  console.warn('MONGODB_URI not set; skipping MongoDB connection. Database features will be unavailable.');
+}
 
 // Routes
 app.use('/api', authRoutes);
