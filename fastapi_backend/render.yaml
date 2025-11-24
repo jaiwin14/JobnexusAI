@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: jobnexus-fastapi
+    env: python
+    plan: standard
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn uploadResume:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: PORT
+        value: 8000

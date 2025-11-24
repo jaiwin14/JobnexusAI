@@ -4,17 +4,13 @@ requests
 pydantic
 python-dotenv
 pymongo
-# Needed for mongodb+srv URIs
 dnspython
 docx2txt
 PyPDF2
 
-# LangChain libraries (pinned compatible set)
-# Do not list langchain-core separately; it's bundled via langchain
-langchain==0.2.16
+# Compatible LangChain versions
+langchain==0.3.8
 langchain-google-genai==2.0.6
-# Underlying Google SDK used by langchain-google-genai
 google-generativeai==0.8.5
 
-# For handling file uploads (multipart/form-data)
 python-multipart
